@@ -2195,8 +2195,9 @@ server <- function(input, output, session) {
                       choices = c("Wash & Fold", "Wash & Iron"),
                       selected = order$service_type),
           dateInput("edit_pickup_date", "Pickup Date", value = order$pickup_date),
-          textAreaInput("edit_instructions", "Instructions", value = order$instructions, 
-                        rows = 3, placeholder = "Add any special instructions..."),
+          textAreaInput("edit_instructions", "Instructions", 
+              value = if(is.na(order$instructions) || order$instructions == "NA") "" else order$instructions, 
+              rows = 3, placeholder = "Add any special instructions..."),
           footer = tagList(
             actionButton("back_to_view", "← Back", class = "btn btn-secondary"),
             actionButton("save_edit", "Save Changes", class = "btn btn-primary")
@@ -2240,7 +2241,9 @@ server <- function(input, output, session) {
           tags$div(
             onclick = "Shiny.setInputValue('locked_field_click', Math.random(), {priority: 'event'})",
             style = "cursor: not-allowed; opacity: 0.6;",
-            textAreaInput("edit_instructions_locked", "Instructions", value = order$instructions, rows = 3),
+            textAreaInput("edit_instructions_locked", "Instructions", 
+              value = if(is.na(order$instructions) || order$instructions == "NA") "" else order$instructions, 
+              rows = 3),
             tags$script("$('#edit_instructions_locked').prop('disabled', true);")
           ),
           footer = tagList(
@@ -2296,7 +2299,7 @@ server <- function(input, output, session) {
                      status)),
             div(style = "margin-top: 12px;",
                 strong("Instructions:"), br(),
-                em(style = "color: #6b7280;", if(is.na(order$instructions) || order$instructions == "") "No instructions" else order$instructions))
+                em(style = "color: #6b7280;", if(is.na(order$instructions) || order$instructions == "" || order$instructions == "NA") "No instructions" else order$instructions))
         ),
         footer = tagList(
           modalButton("Close"),
