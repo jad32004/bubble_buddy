@@ -1968,7 +1968,8 @@ server <- function(input, output, session) {
                   dom = 'tip',
                   ordering = TRUE,
                   columnDefs = list(
-                    list(className = 'dt-center', targets = c(0, 3, 5, 7))
+                    list(className = 'dt-center', targets = c(0, 3, 5, 7)),
+                    list(width = '120px', targets = 6) 
                   )
                 ),
                 rownames = FALSE)
