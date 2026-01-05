@@ -2331,7 +2331,7 @@ server <- function(input, output, session) {
                     input$edit_phone_number,
                     input$edit_loads,
                     input$edit_service_type,
-                    input$edit_pickup_date,
+                    as.character(input$edit_pickup_date),
                     input$edit_instructions,
                     current_time,
                     input$view_order
@@ -2341,7 +2341,7 @@ server <- function(input, output, session) {
         dbExecute(conn, 
                   "UPDATE laundry_orders SET pickup_date = ?, updated_at = ? WHERE id = ?",
                   params = list(
-                    input$edit_pickup_date,
+                    as.character(input$edit_pickup_date),
                     current_time,
                     input$view_order
                   ))
