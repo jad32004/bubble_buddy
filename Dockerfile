@@ -1,7 +1,7 @@
-# Use the official R Shiny image
+# Use official R Shiny image
 FROM rocker/shiny:latest
 
-# Install system dependencies needed for SQLite
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
     libcurl4-openssl-dev \
@@ -9,20 +9,10 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install required R packages
-RUN R -e "install.packages(c(
-    'shiny', 
-    'DBI', 
-    'RSQLite', 
-    'DT', 
-    'dplyr', 
-    'base64enc', 
-    'shinyFeedback', 
-    'shinyjs', 
-    'plotly'
-), repos='https://cloud.r-project.org')"
+# Install R packages
+RUN R -e "install.packages(c('shiny', 'DBI', 'RSQLite', 'DT', 'dplyr', 'base64enc', 'shinyFeedback', 'shinyjs', 'plotly'), repos='https://cloud.r-project.org')"
 
-# Copy all app files into the container
+# Copy app files
 COPY . /srv/shiny-server/
 WORKDIR /srv/shiny-server/
 
