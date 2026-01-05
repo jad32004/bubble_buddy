@@ -1,3 +1,23 @@
+# ---- TEMPORARY: Delete Order 25 ----
+library(DBI)
+library(RSQLite)
+
+# Connect to the deployed SQLite database
+conn <- dbConnect(SQLite(), "lsystem.db")
+
+# Check if order 25 exists
+exists <- dbGetQuery(conn, "SELECT * FROM laundry_orders WHERE id = 25")
+
+if (nrow(exists) > 0) {
+  dbExecute(conn, "DELETE FROM laundry_orders WHERE id = 25")
+  message("✅ Order 25 deleted successfully")
+} else {
+  message("⚠️ Order 25 does not exist")
+}
+
+dbDisconnect(conn)
+# -------------------------------------
+
 library(shiny)
 library(DBI)
 library(RSQLite)
