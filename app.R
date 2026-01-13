@@ -1260,7 +1260,7 @@ server <- function(input, output, session) {
     conn <- dbConnect(SQLite(), "bubblebuddy.sqlite")
     
     tryCatch({
-      current_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+      current_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "Asia/Manila")
       pickup_date <- as.character(input$modal_pickup_date)
       
       dbExecute(conn, "
