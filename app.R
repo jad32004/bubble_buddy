@@ -2321,11 +2321,10 @@ server <- function(input, output, session) {
     
     if(nrow(order) > 0) {
       status <- order$status[1]
-      current_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
       
       if(status == "Pending") {
         dbExecute(conn, 
-                  "UPDATE laundry_orders SET customer_name = ?, phone_number = ?, loads = ?, service_type = ?, pickup_date = ?, instructions = ?, updated_at = ? WHERE id = ?",
+                  "UPDATE laundry_orders SET customer_name = ?, phone_number = ?, loads = ?, service_type = ?, pickup_date = ?, instructions = ? WHERE id = ?",
                   params = list(
                     input$edit_customer_name,
                     input$edit_phone_number,
@@ -2333,16 +2332,14 @@ server <- function(input, output, session) {
                     input$edit_service_type,
                     as.character(input$edit_pickup_date),
                     input$edit_instructions,
-                    current_time,
                     input$view_order
                   ))
         showNotification("✅ Order updated successfully!", type = "message")
       } else {
         dbExecute(conn, 
-                  "UPDATE laundry_orders SET pickup_date = ?, updated_at = ? WHERE id = ?",
+                  "UPDATE laundry_orders SET pickup_date = ? WHERE id = ?",
                   params = list(
                     as.character(input$edit_pickup_date),
-                    current_time,
                     input$view_order
                   ))
         showNotification("✅ Pickup date updated!", type = "message")
