@@ -1607,7 +1607,7 @@ server <- function(input, output, session) {
           )
         ),
         div(class = "form-group",
-            tags$label(class = "form-label", "Pickup Date (Optional)"),
+            tags$label(class = "form-label", "Pickup Date"),
             dateInput("modal_pickup_date", NULL, value = Sys.Date() + 3, 
                       min = Sys.Date(), width = "100%")
         ),
@@ -1660,7 +1660,7 @@ server <- function(input, output, session) {
           )
         ),
         div(class = "form-group",
-            tags$label(class = "form-label", "Pickup Date (Optional)"),
+            tags$label(class = "form-label", "Pickup Date"),
             dateInput("modal_pickup_date", NULL, value = Sys.Date() + 3, 
                       min = Sys.Date(), width = "100%")
         ),
