@@ -1206,7 +1206,7 @@ server <- function(input, output, session) {
     
     orders <- dbGetQuery(conn, "
     SELECT id, status, service_type, updated_at, 
-           (julianday('now', 'localtime') - julianday(updated_at)) * 24 * 60 as minutes_elapsed
+            (julianday('now') - julianday(updated_at)) * 24 * 60 as minutes_elapsed
     FROM laundry_orders 
     WHERE status IN ('Pending', 'Washing', 'Folding', 'Iron')
   ")
@@ -1214,7 +1214,7 @@ server <- function(input, output, session) {
     rows_affected <- 0
     
     if(nrow(orders) > 0) {
-      current_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+      current_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "UTC")
       
       for(i in 1:nrow(orders)) {
         if(!is.na(orders$minutes_elapsed[i]) && orders$minutes_elapsed[i] >= 2) {
@@ -1260,7 +1260,7 @@ server <- function(input, output, session) {
     conn <- dbConnect(SQLite(), "bubblebuddy.sqlite")
     
     tryCatch({
-      current_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "Asia/Manila")
+      current_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "UTC")
       pickup_date <- as.character(input$modal_pickup_date)
       
       dbExecute(conn, "
