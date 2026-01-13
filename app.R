@@ -1783,64 +1783,7 @@ server <- function(input, output, session) {
     refresh_trigger(refresh_trigger() + 1)
     showNotification("✅ Order restored successfully!", type = "message")
   })
-  
-  # Delete Archived Order Permanently
-  observeEvent(input$delete_archived_order, {
-    req(input$delete_archived_order)
-    
-    showModal(modalDialog(
-      title = "⚠️ Confirm Deletion",
-      div(style = "padding: 20px; text-align: center;",
-          tags$p(style = "font-size: 16px; color: #dc2626; font-weight: 700;",
-                 "Are you sure you want to permanently delete this order?"),
-          tags$p(style = "font-size: 14px; color: #6b7280;",
-                 "This action cannot be undone!")
-      ),
-      footer = tagList(
-        modalButton("Cancel"),
-        actionButton("confirm_delete_archived", "Delete Permanently", 
-                     style = "background: #dc2626; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer;")
-      ),
-      easyClose = FALSE
-    ))
-  })
-  
-  # Confirm Delete Archived Order
-  observeEvent(input$confirm_delete_archived, {
-    req(input$delete_archived_order)
-    
-    conn <- dbConnect(SQLite(), "bubblebuddy.sqlite")
-    dbExecute(conn, "DELETE FROM laundry_orders WHERE id = ?", 
-              params = list(input$delete_archived_order))
-    dbDisconnect(conn)
-    
-    refresh_trigger(refresh_trigger() + 1)
-    removeModal()
-    showNotification("🗑️ Order permanently deleted", type = "warning")
-  })
-  
-  # Restore Order
-  observeEvent(input$restore_order, {
-    req(input$restore_order)
-    
-    conn <- dbConnect(SQLite(), "bubblebuddy.sqlite")
-    dbExecute(conn, 
-              "UPDATE laundry_orders SET is_archived = 0, updated_at = ? WHERE id = ?",
-              params = list(Sys.time(), input$restore_order))
-    dbDisconnect(conn)
-    
-    refresh_trigger(refresh_trigger() + 1)
-    showNotification("✅ Order restored successfully!", type = "message")
-    
-    conn <- dbConnect(SQLite(), "bubblebuddy.sqlite")
-    archived <- dbGetQuery(conn, "SELECT * FROM laundry_orders WHERE is_archived = 1")
-    dbDisconnect(conn)
-    
-    if(nrow(archived) == 0) {
-      removeModal()
-    }
-  })
-  
+      
   # Delete Archived Order Permanently
   observeEvent(input$delete_archived_order, {
     req(input$delete_archived_order)
