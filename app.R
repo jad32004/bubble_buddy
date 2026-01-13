@@ -1533,7 +1533,7 @@ server <- function(input, output, session) {
       # Define colors for each status
       status_colors <- c(
         "Pending" = "#fef3c7",
-        "Washing" = "#dbeafe",
+        "Washing" = "#ffd1e8",
         "Folding" = "#e9d5ff",
         "Iron" = "#fed7aa",
         "Ready for Pickup" = "#d1fae5",
