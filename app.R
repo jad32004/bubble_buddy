@@ -1264,10 +1264,10 @@ server <- function(input, output, session) {
       pickup_date <- as.character(input$modal_pickup_date)
       
       dbExecute(conn, "
-      INSERT INTO laundry_orders (customer_name, phone_number, loads, service_type, pickup_date, status, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, 'Pending', ?, ?)
+      INSERT INTO laundry_orders (customer_name, phone_number, loads, service_type, pickup_date, instructions, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, 'Pending', ?, ?)
     ", params = list(input$modal_customer_name, input$modal_phone_number, input$modal_loads, 
-                     input$modal_service_type, pickup_date, current_time, current_time))
+                     input$modal_service_type, pickup_date, input$modal_notes, current_time, current_time))
       
       showNotification("🎉 Order added successfully!", type = "message", duration = 3)
       
