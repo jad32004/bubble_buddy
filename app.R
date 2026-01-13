@@ -1756,8 +1756,8 @@ server <- function(input, output, session) {
         paste0(restore_btn, delete_btn)
       })
       
-      display_archived <- archived[, c("id", "customer_name", "phone_number", "service_type", "Status_Display", "updated_at", "Actions")]
-      colnames(display_archived) <- c("ID", "Customer", "Phone", "Service", "Status", "Archived Date", "Actions")
+      display_archived <- archived[, c("id", "customer_name", "phone_number", "service_type", "Status_Display", "Actions")]
+      colnames(display_archived) <- c("ID", "Customer", "Phone", "Service", "Status", "Actions")
       
       datatable(display_archived,
                 escape = FALSE,
